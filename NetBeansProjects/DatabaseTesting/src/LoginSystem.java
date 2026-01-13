@@ -57,9 +57,17 @@ public class LoginSystem extends javax.swing.JFrame {
         if(ifSignIn){
             SignInPanel.setVisible(true);
             SignUpPanel.setVisible(false);
+            signinUsernameField.setText("");
+            signinPasswordField.setText("");
+            showPasswordCheckBox1.setSelected(false);
         }else{
             SignUpPanel.setVisible(true);
             SignInPanel.setVisible(false);
+            firstnameField.setText("");
+            lastnameField.setText("");
+            signupUsernameField.setText("");
+            signupPasswordField.setText("");
+            showPasswordCheckBox.setSelected(false);
         }
     }
     
@@ -625,7 +633,7 @@ public class LoginSystem extends javax.swing.JFrame {
     private boolean signupUser(String firstname, String lastname, String username, String unhashedPassword){
         String checkQuery = "SELECT 1 FROM users WHERE username = ?";
         String insertQuery = "INSERT INTO users (user_first_name, user_last_name, username, user_password, user_type) VALUES (?, ?, ?, ?, ?)";
-        String DBurl = "jdbc:mysql://localhost:3306/testdb";
+        String DBurl = "jdbc:mysql://localhost:3306/userloginsys";
         String DBusername = "root";
         String DBpassword = "yauder";
         String hashedPassword = BCrypt.hashpw(unhashedPassword, BCrypt.gensalt(10));
@@ -655,7 +663,7 @@ public class LoginSystem extends javax.swing.JFrame {
 
     private UserLoginResult loginUser(String username, String password) {
         String query = "SELECT user_password, user_type FROM users WHERE username = ?";
-        String DBurl = "jdbc:mysql://localhost:3306/testdb";
+        String DBurl = "jdbc:mysql://localhost:3306/userloginsys";
         String DBusername = "root";
         String DBpassword = "yauder";
 
