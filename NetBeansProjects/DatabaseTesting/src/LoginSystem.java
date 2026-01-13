@@ -28,6 +28,11 @@ import org.mindrot.jbcrypt.BCrypt;
 public class LoginSystem extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginSystem.class.getName());
+    // Database Info
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/userloginsys";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "yauder";
+            
     
     private volatile boolean isSigningUp = false;
     private volatile boolean isSigningIn = false;
@@ -633,11 +638,8 @@ public class LoginSystem extends javax.swing.JFrame {
     private boolean signupUser(String firstname, String lastname, String username, String unhashedPassword){
         String checkQuery = "SELECT 1 FROM users WHERE username = ?";
         String insertQuery = "INSERT INTO users (user_first_name, user_last_name, username, user_password, user_type) VALUES (?, ?, ?, ?, ?)";
-        String DBurl = "jdbc:mysql://localhost:3306/userloginsys";
-        String DBusername = "root";
-        String DBpassword = "yauder";
         String hashedPassword = BCrypt.hashpw(unhashedPassword, BCrypt.gensalt(10));
-        try (Connection connect = DriverManager.getConnection(DBurl, DBusername, DBpassword)){
+        try (Connection connect = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)){
             try(PreparedStatement checkStatement = connect.prepareStatement(checkQuery)){
                 checkStatement.setString(1, username);
                 ResultSet rs = checkStatement.executeQuery();
@@ -663,11 +665,8 @@ public class LoginSystem extends javax.swing.JFrame {
 
     private UserLoginResult loginUser(String username, String password) {
         String query = "SELECT user_password, user_type FROM users WHERE username = ?";
-        String DBurl = "jdbc:mysql://localhost:3306/userloginsys";
-        String DBusername = "root";
-        String DBpassword = "yauder";
 
-        try (Connection connect = DriverManager.getConnection(DBurl, DBusername, DBpassword);
+        try (Connection connect = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             PreparedStatement pstatement = connect.prepareStatement(query)) {
             pstatement.setString(1, username);
             ResultSet result = pstatement.executeQuery();
