@@ -31,7 +31,7 @@ public class LoginSystem extends javax.swing.JFrame {
     // Database Info
     private static final String DB_URL = "jdbc:mysql://localhost:3306/userloginsys";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "yauder";
+    private static final String DB_PASSWORD = "....";
             
     
     private volatile boolean isSigningUp = false;
